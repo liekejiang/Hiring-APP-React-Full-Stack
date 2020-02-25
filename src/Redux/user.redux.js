@@ -33,7 +33,7 @@ export function login({ user, pwd }) {
             .then(res => {
                 console.log(res);
                 if (res.status === 200 && res.data.code === 0) {
-                    dispatch(authSuccess({ user, pwd, type: res.data.type }));
+                    dispatch(authSuccess({ user, pwd, type: res.data.data.type }));
                 } else {
                     dispatch(errorMsg(res.data.msg));
                 }

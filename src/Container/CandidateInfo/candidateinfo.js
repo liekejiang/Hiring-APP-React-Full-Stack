@@ -23,7 +23,7 @@ class CandidateInfo extends Component {
 
     render() {
         const path = this.props.location.pathname;
-        const redirect = this.props.redirectTo;
+        const redirect = this.props.user.redirectTo;
         return (
             <div>
                 {redirect&&redirect!==path? <Redirect to={this.props.user.redirectTo}></Redirect> :null}
