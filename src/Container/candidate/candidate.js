@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
-
+import React, {Component} from 'react';
 
 import { connect } from 'react-redux';
 import { getUserList } from '../../Redux/chatuser.redux.js';
 import UserCard from '../../Component/usercard/usercard';
-class Boss extends Component {
+
+class Candidate extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
+
     componentDidMount(){
-        this.props.getUserList('candidate');
+        this.props.getUserList('boss');
     }
 
     render() {
@@ -22,5 +29,4 @@ const mapStateToProps = (State) => {
 
 const mapDispatchToprops = {getUserList};
 
-export default connect(mapStateToProps,mapDispatchToprops)(Boss);
-
+export default connect(mapStateToProps,mapDispatchToprops)(Candidate);

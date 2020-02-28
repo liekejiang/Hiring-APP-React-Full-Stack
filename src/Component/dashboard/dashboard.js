@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { NavBar, TabBar } from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
 import { connect } from 'react-redux';
 import NavLinkBar from '../navlink/navlink';
-import {Switch} from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Boss from '../../Container/boss/boss'
-
-
-function Candidate() {
-    return <h2>Candidate</h2>
-}
+import Candidate from '../../Container/candidate/candidate';
+import User from '../../Component/user/user';
+import { getMsgList, recvMsg1 } from '../../Redux/chat.redux';
 function Msg() {
     return <h2>Msg</h2>
 }
-function User() {
-    return <h2>User</h2>
-}
+
 class Dashboard extends Component {
 
+    componentDidMount() {
+        if (!this.props.chat.chatmsg.length) {
+
+        }
+            this.props.getMsgList();
+            this.props.recvMsg1();
+    }
 
     render() {
         const { pathname } = this.props.location
@@ -29,7 +32,7 @@ class Dashboard extends Component {
                 icon: 'boss',
                 title: 'candidate list',
                 component: Boss,
-                hide: user.type == 'candidate',
+                hide: user.type === 'candidate',
             },
             {
                 path: '/candidate',
@@ -37,7 +40,7 @@ class Dashboard extends Component {
                 icon: 'job',
                 title: 'boss list',
                 component: Candidate,
-                hide: user.type == 'boss',
+                hide: user.type === 'boss',
             },
             {
                 path: '/msg',
@@ -55,7 +58,7 @@ class Dashboard extends Component {
             }
         ]
         return (
-            <div>
+            <div className="test higher">
                 <NavBar className='fixd-header' mode='dard'>{navList.find(v => v.path === pathname).title}</NavBar>
                 <div style={{ marginTop: 45 }}>
                     <Switch>
@@ -76,10 +79,11 @@ class Dashboard extends Component {
 const mapStateToProps = (State) => {
     return {
         user: State.user,
+        chat: State.chat
     }
 };
 
-const mapDispatchToprops = {};
+const mapDispatchToprops = { getMsgList, recvMsg1 };
 
 export default connect(mapStateToProps, mapDispatchToprops)(Dashboard)
 

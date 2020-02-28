@@ -6,8 +6,7 @@ import { getRedirect } from '../util'
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
 const LOAD_DATA = 'LOAD_DATA';
-const UPDATE = 'UPDATE';
-
+const LOGOUT = 'LOGOUT';
 //ACTION
 function errorMsg(msg) {
     return { msg, type: ERROR_MSG };
@@ -19,9 +18,13 @@ function authSuccess(obj) {
 }
 
 export function loadData(userinfo) {
+    console.log('load data')
     return { type: LOAD_DATA, payload: userinfo };
 }
 
+export function logoutSubmit(){
+    return {type: LOGOUT}
+}
 //FUNCTION
 export function login({ user, pwd }) {
     if (!user || !pwd) {
@@ -33,7 +36,7 @@ export function login({ user, pwd }) {
             .then(res => {
                 console.log(res);
                 if (res.status === 200 && res.data.code === 0) {
-                    dispatch(authSuccess({ user, pwd, type: res.data.data.type }));
+                    dispatch(authSuccess(res.data.data));
                 } else {
                     dispatch(errorMsg(res.data.msg));
                 }
@@ -47,7 +50,7 @@ export function register({ user, pwd, repeatpwd, type }) {
         return errorMsg('must input username and password');
     }
 
-    if (pwd != repeatpwd) {
+    if (pwd !== repeatpwd) {
         return errorMsg("password and repeatpwd must be the same")
     }
 
@@ -102,9 +105,10 @@ export function user(state = initState, action) {
         case ERROR_MSG:
             return { ...state, isAuth: false, msg: action.msg };
         case LOAD_DATA:
+            console.log('load data execute')
             return { ...state, ...action.payload };
-        case UPDATE:
-            return {};
+        case LOGOUT:
+            return {...initState, redirectTo: '/login'};
         default:
             return state;
     }

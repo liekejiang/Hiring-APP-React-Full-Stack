@@ -22,6 +22,7 @@ code {
   position: fixed;
   bottom:0;
   width:100%;
+  height: auto;
 }
 
 .fixd-header.am-navbar{
@@ -32,4 +33,20 @@ code {
 
 .page-content{
   padding:45px 5px;
+}
+
+#chat-page .chat-me .am-list-extra{
+  flex-basis: auto;
+}
+
+#chat-page .chat-me .am-list-content{
+  /* padding-right: -10px; */
+  text-align: right;
+}
+
+.stick-footer{
+  z-index: 10;
+  position: fixed;
+  width:100%;
+  bottom: 0;
 }
