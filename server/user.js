@@ -7,7 +7,7 @@ const _filter = { 'pwd': 0, __v: 0 };
 const Chat = models.getModel('chat');
 
 // User.remove({}, function (e, d) { });
-// Chat.remove({}, function (e, d) { });
+Chat.remove({}, function (e, d) { });
 
 
 

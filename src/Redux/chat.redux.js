@@ -23,8 +23,11 @@ export function chat(state = initState, action) {
             return { ...state, chatmsg: action.payload.msgs, unread: action.payload.msgs.filter(v => !v.read &&v.to === action.payload.userid).length, users: action.payload.users }
         case MSG_RECV:
             // return { ...state, chatmsg: [...state.chatmsg, action.payload], unread: state.unread + action.userid===action.payload.to?0:1}
-			const n = action.payload.to==action.userid?1:0
-			return {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+n}
+            const n = action.payload.to===action.userid?1:0
+            console.log(n, state.unread);
+            const newState = {...state,chatmsg:[...state.chatmsg,action.payload],unread:state.unread+n};
+            console.log(action,newState);
+			return newState;
         // case MSG_READ: 
         default:
             return state;
@@ -57,7 +60,7 @@ export function sendMsg({ from, to, msg }) {
 }
 
 function msgRecv(data,userid) {
-    return { type: MSG_RECV, payload: {data}, userid:userid };
+    return { type: MSG_RECV, payload: data, userid:userid };
 }
 
 export function recvMsg() {
